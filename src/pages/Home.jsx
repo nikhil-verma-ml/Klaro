@@ -380,7 +380,7 @@ const RecommendPage = ({ onProductClick }) => {
         formData.append("file", file);
 
         try {
-            const response = await fetch("https://modelbynikhil-fashion-recommendation-api.hf.space/recommend", { method: "POST", body: formData });
+            const response = await fetch("https://modelbynikhil-klaro-recommend-api.hf.space/recommend", { method: "POST", body: formData });
             if (!response.ok) throw new Error("Failed to get recommendations. Please try another image.");
             const data = await response.json();
             
@@ -427,7 +427,7 @@ const SearchRecommendPage = ({ query, onProductClick }) => {
             };
             setLoading(true);
             try {
-                const res = await fetch(`https://modelbynikhil-fashion-search-api.hf.space/search?q=${encodeURIComponent(query)}&limit=60`);
+                const res = await fetch(`https://modelbynikhil-klaro-search-api.hf.space/search?q=${encodeURIComponent(query)}&limit=60`);
                 if (!res.ok) throw new Error("Search failed. Please try again.");
                 const data = await res.json();
                 
