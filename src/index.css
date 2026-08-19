@@ -1,4 +1,16 @@
 @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  margin: 0;
+  background: #f7f4ef;
+  color: #1c1917;
+}
+
+button,
+input {
+  font: inherit;
 }

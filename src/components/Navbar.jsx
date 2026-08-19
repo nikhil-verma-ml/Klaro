@@ -1,58 +1,56 @@
-import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import { Heart, LogOut, Search, Sparkles } from 'lucide-react';
 
-const Navbar = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [query, setQuery] = useState("");
+const Navbar = ({ onLogout }) => {
+    return (
+        <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/85 backdrop-blur-xl">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+                <div className="flex items-center gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-2xl bg-stone-950 text-white">
+                        <Sparkles className="h-5 w-5" />
+                    </div>
+                    <span className="text-xl font-semibold tracking-tight text-stone-950">Klaro</span>
+                </div>
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim().length >= 2) {
-      navigate(`/search?query=${encodeURIComponent(query.trim())}`);
-    }
-  };
-
-  return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-600">👗 Klaro</h1>
-        <form onSubmit={handleSearch} className="flex space-x-2">
-          <input
-            type="text"
-            placeholder="Search for items..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="px-3 py-1 border rounded"
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
-          >
-            Search
-          </button>
-        </form>
-        <ul className="flex space-x-6 ml-4">
-          {["/", "/recommend", "/products", "/about"].map((path, idx) => {
-            const label = ["Home", "Recommend", "Products", "About"][idx];
-            const isActive = location.pathname === path;
-            return (
-              <li key={path}>
-                <Link
-                  to={path}
-                  className={`text-sm font-medium ${
-                    isActive ? "text-blue-600 underline" : "text-gray-600 hover:text-blue-500"
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </nav>
-  );
+                <nav className="flex items-center gap-2 sm:gap-3">
+                    <NavLink
+                        to="/"
+                        end
+                        className={({ isActive }) =>
+                            `rounded-2xl px-3 py-2 text-sm font-semibold transition ${isActive ? 'bg-stone-950 text-white' : 'text-stone-500 hover:bg-stone-100 hover:text-stone-950'}`
+                        }
+                    >
+                        Discover
+                    </NavLink>
+                    <NavLink
+                        to="/search"
+                        className={({ isActive }) =>
+                            `inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold transition ${isActive ? 'bg-stone-950 text-white' : 'text-stone-500 hover:bg-stone-100 hover:text-stone-950'}`
+                        }
+                    >
+                        <Search className="h-4 w-4" />
+                        <span className="hidden sm:inline">Search</span>
+                    </NavLink>
+                    <NavLink
+                        to="/activity"
+                        className={({ isActive }) =>
+                            `inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold transition ${isActive ? 'bg-stone-950 text-white' : 'text-stone-500 hover:bg-stone-100 hover:text-stone-950'}`
+                        }
+                    >
+                        <Heart className="h-4 w-4" />
+                        <span className="hidden sm:inline">Activity</span>
+                    </NavLink>
+                    <button
+                        onClick={onLogout}
+                        className="grid h-10 w-10 place-items-center rounded-2xl text-stone-500 transition hover:bg-stone-100 hover:text-stone-950"
+                        aria-label="Logout"
+                    >
+                        <LogOut className="h-4 w-4" />
+                    </button>
+                </nav>
+            </div>
+        </header>
+    );
 };
 
 export default Navbar;
